@@ -567,29 +567,39 @@ nav button.active {
 
 .cardapio-box-banner {
   position: relative;
-  padding: 14px 14px 0;
-  text-align: center;
+  padding: 0;
+}
+
+/* Véu escuro na base da foto para o nome ficar legível dentro dela */
+.cardapio-box-banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(10, 20, 8, 0.66) 100%);
+  pointer-events: none;
 }
 
 .cardapio-box-img {
   width: 100%;
-  aspect-ratio: 4 / 3.1;
+  aspect-ratio: 16 / 10;
   object-fit: cover;
-  border-radius: 130px 130px 16px 16px;   /* arco no topo */
+  border-radius: 0;               /* os cantos arredondados vêm do card */
   filter: saturate(1.06) contrast(1.02);
 }
 
+/* Nome da categoria dentro da imagem, canto inferior esquerdo */
 .cardapio-box-title {
-  display: inline-block;
-  margin-top: -18px;
-  position: relative;
+  position: absolute;
+  left: 12px;
+  bottom: 11px;
+  z-index: 1;
   background: var(--verde-800);
   color: #fff;
-  font-size: 0.8rem;
+  font-size: 0.76rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 8px 18px;
+  padding: 7px 15px;
   border-radius: 999px;
   box-shadow: var(--sombra-1);
 }
@@ -599,11 +609,10 @@ nav button.active {
 .box-sobremesa .cardapio-box-title { background: var(--caramelo); }
 
 .cardapio-box-list {
-  padding: 16px 16px 20px;
-  display: flex;
-  flex-wrap: wrap;
+  padding: 14px 14px 18px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;   /* comidas em 2 colunas */
   gap: 8px;
-  justify-content: center;
   align-content: flex-start;
   flex: 1;
 }
@@ -612,13 +621,16 @@ nav button.active {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  font-size: 0.9rem;
+  width: 100%;
+  font-size: 0.86rem;
   font-weight: 600;
+  line-height: 1.25;
   color: var(--tinta);
   background: var(--papel);
   border: 1px solid var(--borda);
-  border-radius: 999px;
-  padding: 7px 14px;
+  border-radius: 11px;
+  padding: 8px 11px;
+  white-space: normal;
 }
 .cardapio-item-tag::before {
   content: "";
@@ -707,7 +719,13 @@ nav button.active {
 .cpg-carne  { color: var(--terra); border-color: #e6c4bc !important; }
 .cpg-salada { color: var(--salada); border-color: #c9dfc0 !important; }
 .cpg-list { display: flex; flex-wrap: wrap; gap: 7px; }
-.cpg-list .cardapio-item-tag { font-size: 0.85rem; padding: 6px 12px; }
+.cpg-list .cardapio-item-tag {
+  width: auto;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
 
 /* Cards das marmitas padrão — assinatura de comanda */
 .marmita-cards {
@@ -1523,11 +1541,10 @@ footer {
   /* Cardápio 2x2 compacto */
   .cardapio-atualizado { font-size: 0.76rem; padding: 6px 12px; }
   .cardapio-grid { gap: 12px; }
-  .cardapio-box-banner { padding: 8px 8px 0; }
-  .cardapio-box-img { border-radius: 80px 80px 12px 12px; }
-  .cardapio-box-title { font-size: 0.62rem; padding: 6px 11px; letter-spacing: 0.07em; margin-top: -15px; }
-  .cardapio-box-list { padding: 10px 8px 14px; gap: 6px; }
-  .cardapio-item-tag { font-size: 0.76rem; padding: 5px 10px; gap: 5px; }
+  .cardapio-box-title { font-size: 0.6rem; padding: 5px 10px; letter-spacing: 0.06em; left: 8px; bottom: 8px; }
+  .cardapio-box-list { padding: 8px 7px 11px; gap: 5px; }
+  .cardapio-item-tag { font-size: 0.72rem; padding: 5px 7px; gap: 5px; border-radius: 9px; }
+  .cpg-list .cardapio-item-tag { font-size: 0.76rem; padding: 5px 10px; }
 
   /* Pedidos */
   .kilo-banner { padding: 18px 16px; margin-bottom: 20px; }
