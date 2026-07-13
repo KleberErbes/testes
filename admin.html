@@ -530,40 +530,62 @@
 
     /* ===== RESPONSIVO ===== */
     @media (max-width: 600px) {
-      .admin-header { padding: 0 14px; }
-      .admin-header-title { font-size: 0.98rem; }
+      body { font-size: 15px; }
+      .admin-header { padding: 0 12px; height: 54px; }
+      .admin-header-title { font-size: 0.9rem; }
       .badge-total { display: none; }
-      .btn-imprimir, .btn-sair { padding: 9px 14px; font-size: 0.82rem; }
-      .admin-body { padding: 20px 12px 52px; }
-      .pedido-card { padding: 18px 16px 16px; }
+      .btn-imprimir, .btn-sair { padding: 8px 12px; font-size: 0.78rem; min-height: 38px; }
+      .admin-tabs { top: 54px; padding: 0 8px; }
+      .admin-tab { font-size: 0.82rem; padding: 11px 12px; min-height: 44px; }
+      .admin-body { padding: 16px 10px 44px; }
+      .admin-info-bar { margin-bottom: 14px; }
+      .admin-info-bar h2 { font-size: 1.2rem; }
+      .status-atualizacao { font-size: 0.76rem; }
+
+      /* Pedidos */
+      .pedido-card { padding: 15px 13px 13px; margin-bottom: 20px; }
+      .pedido-cliente { font-size: 1.08rem; }
+      .pedido-hora, .pedido-total-tag { font-size: 0.72rem; padding: 4px 10px; }
+      .marmita-badge { font-size: 0.74rem; padding: 4px 11px; }
+      .marmita-itens { font-size: 0.85rem; }
 
       /* Resumo */
-      .resumo-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-      .stat-card { padding: 15px 14px; }
-      .stat-num { font-size: 1.8rem; }
-      .stat-valor { font-size: 1.4rem; }
-      .stat-label { font-size: 0.66rem; }
+      .resumo-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .stat-card { padding: 12px 11px; }
+      .stat-num { font-size: 1.5rem; }
+      .stat-valor { font-size: 1.2rem; }
+      .stat-label { font-size: 0.6rem; }
+      .stat-sub { font-size: 0.74rem; }
+      .barra-prop { height: 9px; }
+      .legenda { font-size: 0.76rem; gap: 12px; }
 
       /* Previsão */
-      .prev-card { padding: 18px 16px; }
-      .prev-dia { font-size: 1.25rem; }
-      .prev-nums { gap: 14px 20px; }
-      .prev-n b { font-size: 1.45rem; }
-      .prev-n span { font-size: 0.72rem; }
+      .prev-card { padding: 15px 13px; }
+      .prev-eyebrow { font-size: 0.6rem; }
+      .prev-dia { font-size: 1.1rem; margin-bottom: 10px; }
+      .prev-nums { gap: 12px 16px; }
+      .prev-n b { font-size: 1.25rem; }
+      .prev-n span { font-size: 0.66rem; }
+      .prev-conf { font-size: 0.7rem; margin-top: 10px; }
 
-      /* Tabela do histórico: fontes compactas para caber na tela */
-      table.hist th { font-size: 0.62rem; padding: 8px 4px; letter-spacing: 0.02em; }
-      table.hist td { font-size: 0.8rem; padding: 8px 4px; }
-      table.hist td.dia { font-size: 0.78rem; }
+      /* Tabela do histórico */
+      table.hist th { font-size: 0.56rem; padding: 7px 3px; letter-spacing: 0.01em; }
+      table.hist td { font-size: 0.74rem; padding: 7px 3px; }
+      table.hist td.dia { font-size: 0.72rem; }
 
       /* Calendário */
-      .cal-wrap { padding: 16px 12px; }
-      .cal-grid { gap: 3px; }
-      .cal-dia { font-size: 0.88rem; border-radius: 9px; }
-      .cal-nav { width: 40px; height: 40px; }
-      .cal-mes { font-size: 1.08rem; }
-      .cal-legenda { gap: 12px; font-size: 0.78rem; }
-      .chip-data { font-size: 0.85rem; }
+      .cal-wrap { padding: 13px 9px; }
+      .cal-grid { gap: 2px; }
+      .cal-dia { font-size: 0.8rem; border-radius: 8px; border-width: 1px; }
+      .cal-dow { font-size: 0.6rem; }
+      .cal-nav { width: 38px; height: 38px; font-size: 1.05rem; }
+      .cal-mes { font-size: 0.98rem; }
+      .cal-legenda { gap: 10px; font-size: 0.7rem; margin-top: 12px; }
+      .cal-legenda i { width: 11px; height: 11px; }
+      .cal-hint { font-size: 0.76rem; }
+      .lista-fechados h3 { font-size: 0.66rem; }
+      .chip-data { font-size: 0.78rem; padding: 6px 6px 6px 13px; }
+      .chip-data button { width: 25px; height: 25px; font-size: 0.8rem; }
     }
   </style>
 </head>

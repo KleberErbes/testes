@@ -1436,41 +1436,141 @@ footer {
 
 /* ===== RESPONSIVO ===== */
 @media (max-width: 720px) {
-  body { font-size: 16.5px; }
-  section { padding: 56px 18px; }
+  body { font-size: 15px; }
+  section { padding: 40px 16px; }
+  section h2 { font-size: clamp(1.5rem, 5.5vw, 1.9rem); }
+  .subtitle { font-size: 0.92rem; margin-bottom: 24px; }
 
   /* Cabeçalho em duas linhas: logo em cima, horário + carrinho embaixo */
   .header-top {
     flex-wrap: wrap;
     justify-content: center;
-    padding: 10px 14px 8px;
-    gap: 8px;
+    padding: 8px 12px 6px;
+    gap: 6px;
   }
-  .logo { width: 100%; justify-content: center; }
-  header h1 { white-space: normal; text-align: center; }
-  .logo-sub { display: block; text-align: center; }
+  .logo { width: 100%; justify-content: center; gap: 9px; }
+  .logo-icon { width: 40px; height: 40px; }
+  header h1 { white-space: normal; text-align: center; font-size: 1rem; }
+  .logo-sub { display: block; text-align: center; font-size: 0.62rem; }
   .header-right { width: 100%; justify-content: center; }
-  .cart-section { flex-wrap: wrap; justify-content: center; }
+  .cart-section { flex-wrap: wrap; justify-content: center; gap: 8px; }
 
-  .scroll-anchor { top: -150px; }
+  nav button { font-size: 0.85rem; padding: 11px 13px; min-height: 44px; }
 
-  .badge-horario { font-size: 0.74rem; padding: 6px 11px; }
-  .cart-btn { padding: 11px 16px; font-size: 0.9rem; }
+  .scroll-anchor { top: -132px; }
 
-  .horario-card { margin-top: -74px; }
+  .badge-horario { font-size: 0.7rem; padding: 5px 10px; }
+  .cart-btn { padding: 9px 15px; font-size: 0.85rem; min-height: 44px; }
+  .cart-count { min-width: 21px; height: 21px; font-size: 0.72rem; }
 
-  .cardapio-grid { gap: 14px; }
-  .cardapio-box-banner { padding: 10px 10px 0; }
-  .cardapio-box-img { border-radius: 90px 90px 14px 14px; }
-  .cardapio-box-title { font-size: 0.68rem; padding: 7px 13px; letter-spacing: 0.08em; }
-  .cardapio-box-list { padding: 12px 10px 16px; }
-  .cardapio-item-tag { font-size: 0.82rem; padding: 6px 11px; }
+  /* Hero */
+  .hero { padding: 44px 18px 40px; }
+  .hero-badge { font-size: 0.64rem; padding: 6px 14px; margin-bottom: 18px; }
+  .hero h2 { font-size: clamp(1.65rem, 7vw, 2.2rem); margin-bottom: 12px; }
+  .hero p { font-size: 0.95rem; margin-bottom: 24px; }
+  .hero-btn-primary, .hero-btn-secondary { min-height: 48px; padding: 12px 22px; font-size: 0.92rem; }
 
-  .marmita-cards { grid-template-columns: 1fr; }
-  .personalizada-box { padding: 24px 18px 22px; }
+  /* Horário + buffet */
+  .buffet-home { padding: 40px 16px 44px; }
+  .horario-card { margin-top: -66px; padding: 14px 18px; gap: 12px; }
+  .horario-icon { width: 40px; height: 40px; }
+  .horario-icon svg { width: 20px; height: 20px; }
+  .horario-card p { font-size: 1.2rem; }
+  .horario-card small { font-size: 0.8rem; }
+  .aviso-horario { padding: 11px 14px; }
+  .aviso-horario p { font-size: 0.85rem; }
+  .aviso-icone { width: 32px; height: 32px; }
+  .aviso-icone svg { width: 17px; height: 17px; }
+  .buffet-home-title { margin-top: 38px !important; }
+  .buffet-grid { gap: 12px; }
+  .buffet-card { padding: 20px 18px; }
+  .buffet-price { font-size: 2rem; }
+  .buffet-card p { font-size: 0.85rem; }
 
-  .kilo-options { flex-direction: column; align-items: stretch; }
-  .kilo-tag { justify-content: space-between; }
+  /* Cardápio 2x2 compacto */
+  .cardapio-atualizado { font-size: 0.76rem; padding: 6px 12px; }
+  .cardapio-grid { gap: 12px; }
+  .cardapio-box-banner { padding: 8px 8px 0; }
+  .cardapio-box-img { border-radius: 80px 80px 12px 12px; }
+  .cardapio-box-title { font-size: 0.62rem; padding: 6px 11px; letter-spacing: 0.07em; margin-top: -15px; }
+  .cardapio-box-list { padding: 10px 8px 14px; gap: 6px; }
+  .cardapio-item-tag { font-size: 0.76rem; padding: 5px 10px; gap: 5px; }
+
+  /* Pedidos */
+  .kilo-banner { padding: 18px 16px; margin-bottom: 20px; }
+  .kilo-banner h3 { font-size: 1.1rem; margin-bottom: 12px; }
+  .kilo-options { flex-direction: column; align-items: stretch; gap: 8px; }
+  .kilo-tag { justify-content: space-between; font-size: 0.84rem; padding: 9px 13px; }
+
+  .cardapio-pedidos-box { padding: 16px 15px 18px; margin-bottom: 24px; }
+  .cardapio-pedidos-title { font-size: 1.08rem; margin-bottom: 12px; }
+  .cpg-label { font-size: 0.66rem; }
+  .cpg-list .cardapio-item-tag { font-size: 0.76rem; padding: 5px 10px; }
+
+  .marmita-cards { grid-template-columns: 1fr; gap: 22px; margin-bottom: 28px; }
+  .marmita-card { padding: 20px 18px 18px; }
+  .marmita-card h3 { font-size: 1.2rem; }
+  .gramagem { font-size: 0.72rem; margin-bottom: 9px; }
+  .price-tag { font-size: 1.8rem; padding-bottom: 11px; margin-bottom: 11px; }
+  .marmita-card ul li { font-size: 0.88rem; padding: 5px 0 5px 20px; }
+  .marmita-card ul li::before { width: 7px; height: 7px; top: 12px; }
+
+  .obs-input { font-size: 0.88rem; padding: 10px 12px; min-height: 48px; margin-bottom: 11px; }
+
+  .qty-selector { gap: 14px; margin-bottom: 12px; }
+  .qty-btn { width: 44px; height: 44px; font-size: 1.3rem; border-radius: 12px; }
+  .qty-value { font-size: 1.25rem; }
+
+  .btn-add { min-height: 48px; font-size: 0.9rem; padding: 12px 14px; }
+
+  /* Personalizada */
+  .personalizada-box { padding: 20px 15px 18px; }
+  .personalizada-box h3 { font-size: 1.35rem; }
+  .section-label { font-size: 0.7rem; margin: 22px 0 8px; padding-top: 16px; }
+  .size-btn { min-height: 54px; font-size: 0.92rem; }
+  .size-btn small { font-size: 0.76rem; }
+  .counter-info { font-size: 0.8rem; }
+  .item-chip { min-height: 42px; padding: 8px 14px; font-size: 0.85rem; }
+  .carne-card { padding: 9px 12px; }
+  .carne-nome { font-size: 0.88rem; }
+  .carne-btn { width: 38px; height: 38px; font-size: 1.1rem; }
+  .preco-personalizada { font-size: 0.92rem; margin-top: 20px; padding-top: 14px; }
+  .preco-personalizada span:last-child { font-size: 1.6rem; }
+  .info-pesar { font-size: 0.83rem; padding: 10px 13px; }
+
+  /* Localização */
+  .loc-info-row { padding: 13px 2px; }
+  .loc-label { font-size: 0.62rem; }
+  .loc-value { font-size: 0.92rem; }
+  .loc-mapa-foto { height: 160px; }
+  .loc-mapa-body { padding: 16px 17px; }
+  .loc-mapa-btn { padding: 11px 19px; min-height: 44px; font-size: 0.86rem; }
+
+  /* Carrinho e modais */
+  .cart-header { padding: 15px 16px; }
+  .cart-header h2 { font-size: 1.15rem; }
+  .close-cart { width: 40px; height: 40px; }
+  .cart-items { padding: 18px 13px 12px; gap: 10px; }
+  .cart-item { padding: 12px 40px 12px 13px; }
+  .cart-item-title { font-size: 0.92rem; }
+  .cart-item-desc { font-size: 0.8rem; }
+  .cart-footer { padding: 14px 15px calc(14px + env(safe-area-inset-bottom)); }
+  .cart-total span:last-child { font-size: 1.4rem; }
+  .pagamentos { font-size: 0.78rem; margin-bottom: 11px; }
+  .whatsapp-btn { min-height: 50px; font-size: 0.92rem; }
+
+  .modal-nome { padding: 22px 18px 18px; }
+  .modal-nome h3 { font-size: 1.2rem; }
+  .modal-nome p { font-size: 0.86rem; }
+  .modal-nome input { font-size: 0.95rem; padding: 12px 13px; }
+  .modal-btn-cancelar, .modal-btn-confirmar { min-height: 46px; font-size: 0.88rem; }
+
+  .toast { font-size: 0.86rem; padding: 12px 15px; }
+  .aviso-balcao { font-size: 0.84rem; padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); }
+
+  footer { padding: 32px 18px 22px; }
+  .footer-logo { font-size: 1.2rem; }
+  .footer-copy { font-size: 0.74rem; }
 }
 
 @media (max-width: 420px) {
