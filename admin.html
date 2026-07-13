@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Restaurante do Mário</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+  <script type="module">
+    import { Document, Packer, Paragraph, TextRun } from 'https://esm.sh/docx@8.5.0';
+    window.docxLib = { Document, Packer, Paragraph, TextRun };
+  </script>
+  <style>
+    /* ============================================================
+       ADMIN — Restaurante do Mário · Design 2026
+       Mesmo sistema visual do site: verde profundo + dourado,
+       Fraunces + Atkinson Hyperlegible, foco em legibilidade.
+       ============================================================ */
+    :root {
+      --verde-900: #14350f;
+      --verde-800: #1a4a14;
+      --verde-700: #1e5216;
+      --verde-600: #2e7d20;
+      --verde-100: #e9f1e5;
+      --dourado: #c9a050;
+      --dourado-claro: #e6c887;
+      --dourado-texto: #8a6b21;
+      --terra: #9e3b2b;
+      --papel: #faf8f2;
+      --card-bg: #ffffff;
+      --tinta: #23281f;
+      --cinza: #5c6355;
+      --borda: #e3e0d6;
+      --erro: #b3372a;
+      --sombra-1: 0 1px 3px rgba(24,34,18,0.08);
+      --sombra-2: 0 6px 20px rgba(24,34,18,0.10);
+      --sombra-3: 0 14px 38px rgba(24,34,18,0.16);
+      --raio: 14px;
+      --raio-g: 20px;
+      --transicao: 200ms cubic-bezier(0.2,0.6,0.3,1);
+      /* aliases usados por regras antigas */
+      --verde: var(--verde-800);
+      --verde-claro: var(--verde-600);
+      --texto: var(--tinta);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Atkinson Hyperlegible', 'Segoe UI', Arial, sans-serif;
+      background: var(--papel);
+      color: var(--tinta);
+      font-size: 16.5px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    :focus-visible { outline: 3px solid var(--dourado); outline-offset: 2px; border-radius: 6px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+
+    /* ===== LOGIN ===== */
+    #telaLogin {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background:
+        radial-gradient(900px 420px at 85% -10%, rgba(201,160,80,0.14), transparent 60%),
+        linear-gradient(160deg, var(--verde-900), var(--verde-800));
+      padding: 20px;
+    }
+    .login-box {
+      background: var(--card-bg);
+      border-radius: var(--raio-g);
+      padding: 44px 36px 36px;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: var(--sombra-3);
+      text-align: center;
+    }
+    .login-logo {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--verde-900);
+    }
+    .login-sub {
+      font-size: 0.72rem;
+      color: var(--cinza);
+      letter-spacing: 0.22em;
+      margin: 6px 0 28px;
+    }
+    .login-box input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid var(--borda);
+      border-radius: var(--raio);
+      font-size: 1rem;
+      font-family: inherit;
+      margin-bottom: 12px;
+      transition: border-color var(--transicao);
+    }
+    .login-box input:focus { outline: none; border-color: var(--verde-600); }
+    .login-btn {
+      width: 100%;
+      min-height: 52px;
+      padding: 14px;
+      background: var(--verde-800);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 800;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background var(--transicao), transform var(--transicao);
+    }
+    .login-btn:hover { background: var(--verde-700); transform: translateY(-1px); }
+    .login-erro { color: var(--erro); font-size: 0.88rem; margin-top: 12px; min-height: 20px; }
+
+    /* ===== APP ===== */
+    #telaAdmin { display: none; }
+
+    .admin-header {
+      background: var(--verde-900);
+      color: #fff;
+      padding: 0 24px;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 2px 14px rgba(10,20,8,0.35);
+    }
+    .admin-header-title {
+      font-family: 'Fraunces', Georgia, serif;
+      font-weight: 700;
+      font-size: 1.12rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .admin-header-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .badge-total {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .btn-imprimir, .btn-sair {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 18px;
+      min-height: 42px;
+      font-size: 0.88rem;
+      font-weight: 800;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background var(--transicao), transform var(--transicao);
+    }
+    .btn-imprimir { background: var(--dourado); color: #221a04; }
+    .btn-imprimir:hover { background: var(--dourado-claro); transform: translateY(-1px); }
+    .btn-sair { background: rgba(255,255,255,0.12); color: #fff; }
+    .btn-sair:hover { background: rgba(255,255,255,0.22); }
+
+    /* ===== ABAS ===== */
+    .admin-tabs {
+      display: flex;
+      gap: 2px;
+      background: var(--verde-900);
+      padding: 0 16px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      position: sticky;
+      top: 62px;
+      z-index: 49;
+    }
+    .admin-tab {
+      background: none;
+      border: none;
+      padding: 14px 18px;
+      min-height: 50px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.65);
+      border-bottom: 3px solid transparent;
+      transition: color var(--transicao), border-color var(--transicao);
+      white-space: nowrap;
+    }
+    .admin-tab:hover { color: #fff; }
+    .admin-tab.active { color: #fff; border-bottom-color: var(--dourado); }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .admin-body { max-width: 860px; margin: 0 auto; padding: 28px 20px 60px; }
+
+    .admin-info-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .admin-info-bar h2 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--verde-900);
+    }
+    .status-atualizacao {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--cinza);
+    }
+    .dot-animado {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--verde-600);
+      animation: pulsar 1.6s ease-in-out infinite;
+    }
+    @keyframes pulsar {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.82); }
+    }
+
+    /* ===== CARDS DE PEDIDO (assinatura de comanda) ===== */
+    .pedido-card {
+      background: var(--card-bg);
+      border-radius: 6px 6px var(--raio) var(--raio);
+      border-top: 5px solid var(--verde-800);
+      padding: 20px 22px 18px;
+      margin-bottom: 24px;
+      box-shadow: var(--sombra-2);
+      position: relative;
+    }
+    .pedido-card::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: -9px;
+      height: 11px;
+      background-image: radial-gradient(circle at 6px 0px, transparent 5px, var(--card-bg) 5.5px);
+      background-size: 14px 11px;
+      background-repeat: repeat-x;
+    }
+
+    .pedido-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed var(--borda);
+    }
+    .pedido-cliente {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--verde-900);
+    }
+    .pedido-hora {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--cinza);
+      background: var(--papel);
+      border: 1px solid var(--borda);
+      border-radius: 999px;
+      padding: 5px 12px;
+    }
+    .pedido-total-tag {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #fff;
+      background: var(--verde-700);
+      border-radius: 999px;
+      padding: 5px 14px;
+    }
+
+    .marmita-linha { padding: 12px 0; border-bottom: 1px solid #f1eee4; }
+    .marmita-linha:last-child { border-bottom: none; padding-bottom: 4px; }
+    .marmita-badge {
+      display: inline-block;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--verde-800);
+      background: var(--verde-100);
+      border-radius: 999px;
+      padding: 5px 14px;
+      margin-bottom: 6px;
+    }
+    .marmita-itens { font-size: 0.95rem; color: var(--tinta); line-height: 1.6; }
+    .marmita-itens .obs-destaque { color: #1a56db; font-weight: 700; }
+
+    .pedido-vazio {
+      text-align: center;
+      color: var(--cinza);
+      background: var(--card-bg);
+      border: 1px dashed var(--borda);
+      border-radius: var(--raio-g);
+      padding: 44px 20px;
+      font-size: 1rem;
+    }
+
+    .loading-spinner, .carregando-box { text-align: center; padding: 48px 20px; color: var(--cinza); }
+    .spinner {
+      width: 34px;
+      height: 34px;
+      border: 3px solid var(--borda);
+      border-top-color: var(--verde-700);
+      border-radius: 50%;
+      animation: girar 0.8s linear infinite;
+      margin: 0 auto 14px;
+    }
+    @keyframes girar { to { transform: rotate(360deg); } }
+
+    /* ===== RESUMO ===== */
+    .resumo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--borda);
+      border-radius: var(--raio-g);
+      padding: 20px 22px;
+      box-shadow: var(--sombra-1);
+    }
+    .stat-card.wide { grid-column: 1 / -1; }
+    .stat-label {
+      font-size: 0.74rem;
+      color: var(--cinza);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+    }
+    .stat-num {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      line-height: 1.05;
+      margin-top: 4px;
+    }
+    .stat-num.media { color: var(--verde-600); }
+    .stat-num.grande { color: var(--terra); }
+    .stat-num.verde { color: var(--verde-800); }
+    .stat-sub { font-size: 0.84rem; color: var(--cinza); margin-top: 5px; }
+    .stat-valor {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--verde-800);
+    }
+    .barra-prop { height: 12px; border-radius: 7px; background: var(--borda); overflow: hidden; display: flex; margin-top: 12px; }
+    .barra-prop i { display: block; height: 100%; }
+    .barra-prop .fm { background: var(--verde-600); }
+    .barra-prop .fg { background: var(--terra); }
+    .legenda { display: flex; gap: 18px; margin-top: 10px; font-size: 0.86rem; color: var(--cinza); flex-wrap: wrap; }
+    .legenda span { display: flex; align-items: center; gap: 6px; }
+    .legenda i { width: 12px; height: 12px; border-radius: 4px; display: inline-block; }
+
+    .prev-card {
+      background:
+        radial-gradient(700px 300px at 90% -20%, rgba(201,160,80,0.18), transparent 60%),
+        linear-gradient(150deg, var(--verde-900), var(--verde-800));
+      color: #fff;
+      border-radius: var(--raio-g);
+      padding: 24px;
+      margin-bottom: 18px;
+      box-shadow: var(--sombra-2);
+    }
+    .prev-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--dourado-claro);
+      font-weight: 700;
+    }
+    .prev-dia {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 1.55rem;
+      font-weight: 700;
+      margin: 4px 0 14px;
+    }
+    .prev-nums { display: flex; gap: 26px; flex-wrap: wrap; }
+    .prev-n b {
+      display: block;
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 1.9rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .prev-n span { font-size: 0.78rem; opacity: 0.85; }
+    .prev-conf { margin-top: 14px; font-size: 0.8rem; opacity: 0.85; }
+
+    table.hist {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card-bg);
+      border-radius: var(--raio);
+      overflow: hidden;
+      box-shadow: var(--sombra-1);
+    }
+    table.hist th {
+      background: var(--verde-800);
+      color: #fff;
+      font-size: 0.74rem;
+      padding: 11px 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    table.hist td { padding: 11px 8px; font-size: 0.9rem; text-align: center; border-top: 1px solid var(--borda); }
+    table.hist td.dia { text-align: left; font-weight: 700; color: var(--verde-800); white-space: nowrap; }
+
+    /* ===== CALENDÁRIO DIAS FECHADOS ===== */
+    .cal-wrap {
+      background: var(--card-bg);
+      border: 1px solid var(--borda);
+      border-radius: var(--raio-g);
+      padding: 24px;
+      box-shadow: var(--sombra-1);
+      max-width: 440px;
+      margin: 0 auto 22px;
+    }
+    .cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .cal-mes {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--verde-900);
+    }
+    .cal-nav {
+      background: var(--papel);
+      border: 1.5px solid var(--borda);
+      border-radius: 12px;
+      width: 44px;
+      height: 44px;
+      cursor: pointer;
+      font-size: 1.25rem;
+      color: var(--verde-800);
+      font-weight: 800;
+      transition: background var(--transicao), border-color var(--transicao);
+    }
+    .cal-nav:hover { background: var(--verde-100); border-color: var(--verde-600); }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+    .cal-dow {
+      text-align: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--cinza);
+      padding: 6px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .cal-dia {
+      aspect-ratio: 1;
+      border: 1.5px solid var(--borda);
+      border-radius: 12px;
+      background: #fff;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--tinta);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color var(--transicao), background var(--transicao), transform var(--transicao);
+    }
+    .cal-dia:hover:not(.vazio):not(.domingo) { border-color: var(--verde-600); transform: scale(1.04); }
+    .cal-dia.vazio { border: none; background: none; cursor: default; }
+    .cal-dia.fechado { background: var(--erro); color: #fff; border-color: var(--erro); }
+    .cal-dia.hoje { box-shadow: 0 0 0 2.5px var(--dourado); }
+    .cal-dia.domingo { background: #f4ecea; color: #c4a49e; cursor: default; }
+    .cal-dia.passado { opacity: 0.4; }
+    .cal-legenda { display: flex; gap: 18px; margin-top: 16px; font-size: 0.84rem; color: var(--cinza); justify-content: center; flex-wrap: wrap; }
+    .cal-legenda span { display: flex; align-items: center; gap: 6px; }
+    .cal-legenda i { width: 14px; height: 14px; border-radius: 5px; display: inline-block; }
+    .cal-hint { text-align: center; font-size: 0.86rem; color: var(--cinza); margin-top: 8px; }
+
+    .lista-fechados { max-width: 440px; margin: 0 auto; }
+    .lista-fechados h3 {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--verde-800);
+      margin-bottom: 12px;
+      font-weight: 800;
+    }
+    .chip-data {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--card-bg);
+      border: 1px solid var(--borda);
+      border-radius: 999px;
+      padding: 8px 8px 8px 16px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--tinta);
+      margin: 0 8px 8px 0;
+      box-shadow: var(--sombra-1);
+    }
+    .chip-data button {
+      background: #f6ece9;
+      color: var(--erro);
+      border: none;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 800;
+      line-height: 1;
+      transition: background var(--transicao);
+    }
+    .chip-data button:hover { background: #f0dcd7; }
+
+    /* ===== RESPONSIVO ===== */
+    @media (max-width: 600px) {
+      .admin-header { padding: 0 14px; }
+      .admin-header-title { font-size: 0.98rem; }
+      .badge-total { display: none; }
+      .btn-imprimir, .btn-sair { padding: 9px 14px; font-size: 0.82rem; }
+      .admin-body { padding: 20px 12px 52px; }
+      .pedido-card { padding: 18px 16px 16px; }
+
+      /* Resumo */
+      .resumo-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .stat-card { padding: 15px 14px; }
+      .stat-num { font-size: 1.8rem; }
+      .stat-valor { font-size: 1.4rem; }
+      .stat-label { font-size: 0.66rem; }
+
+      /* Previsão */
+      .prev-card { padding: 18px 16px; }
+      .prev-dia { font-size: 1.25rem; }
+      .prev-nums { gap: 14px 20px; }
+      .prev-n b { font-size: 1.45rem; }
+      .prev-n span { font-size: 0.72rem; }
+
+      /* Tabela do histórico: fontes compactas para caber na tela */
+      table.hist th { font-size: 0.62rem; padding: 8px 4px; letter-spacing: 0.02em; }
+      table.hist td { font-size: 0.8rem; padding: 8px 4px; }
+      table.hist td.dia { font-size: 0.78rem; }
+
+      /* Calendário */
+      .cal-wrap { padding: 16px 12px; }
+      .cal-grid { gap: 3px; }
+      .cal-dia { font-size: 0.88rem; border-radius: 9px; }
+      .cal-nav { width: 40px; height: 40px; }
+      .cal-mes { font-size: 1.08rem; }
+      .cal-legenda { gap: 12px; font-size: 0.78rem; }
+      .chip-data { font-size: 0.85rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== TELA DE LOGIN ===== -->
+<div id="telaLogin">
+  <div class="login-box">
+    <div class="login-logo">Restaurante do Mário</div>
+    <div class="login-sub">PAINEL ADMINISTRATIVO</div>
+    <input type="text" id="inputUsuario" placeholder="Usuário" autocomplete="username"
+      autocapitalize="off" autocorrect="off" spellcheck="false"
+      onkeydown="if(event.key==='Enter') document.getElementById('inputSenha').focus()">
+    <input type="password" id="inputSenha" placeholder="Senha" autocomplete="current-password"
+      autocapitalize="off" autocorrect="off" spellcheck="false"
+      onkeydown="if(event.key==='Enter') fazerLogin()">
+    <button class="login-btn" onclick="fazerLogin()">Entrar</button>
+    <div class="login-erro" id="loginErro"></div>
+  </div>
+</div>
+
+<!-- ===== PAINEL ADMIN ===== -->
+<div id="telaAdmin">
+  <header class="admin-header">
+    <div class="admin-header-title">Restaurante do Mário — Admin</div>
+    <div class="admin-header-right">
+      <span class="badge-total" id="badgeTotal">0 pedidos</span>
+      <button class="btn-imprimir" onclick="gerarWord()">Baixar</button>
+      <button class="btn-sair" onclick="sair()">Sair</button>
+    </div>
+  </header>
+
+  <nav class="admin-tabs">
+    <button class="admin-tab active" data-tab="pedidos" onclick="trocarTab('pedidos')">Pedidos do Dia</button>
+    <button class="admin-tab" data-tab="resumo" onclick="trocarTab('resumo')">Resumo &amp; Histórico</button>
+    <button class="admin-tab" data-tab="fechados" onclick="trocarTab('fechados')">Dias Fechados</button>
+  </nav>
+
+  <div class="admin-body">
+    <!-- ===== ABA: PEDIDOS DO DIA ===== -->
+    <div class="tab-panel active" id="tab-pedidos">
+      <div class="admin-info-bar">
+        <h2>Pedidos do Dia</h2>
+        <div class="status-atualizacao">
+          <div class="dot-animado"></div>
+          <span id="statusAtualizacao">Atualizando em 30s...</span>
+        </div>
+      </div>
+
+      <div id="listaPedidos">
+        <div class="loading-spinner">
+          <div class="spinner"></div>
+          <div>Carregando pedidos...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== ABA: RESUMO & HISTÓRICO ===== -->
+    <div class="tab-panel" id="tab-resumo">
+      <div class="admin-info-bar"><h2>Resumo &amp; Histórico</h2></div>
+      <div id="resumoConteudo">
+        <div class="carregando-box"><div class="spinner"></div>Carregando resumo…</div>
+      </div>
+    </div>
+
+    <!-- ===== ABA: DIAS FECHADOS ===== -->
+    <div class="tab-panel" id="tab-fechados">
+      <div class="admin-info-bar"><h2>Dias Fechados</h2></div>
+      <div id="fechadosConteudo">
+        <div class="carregando-box"><div class="spinner"></div>Carregando calendário…</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ========== CONFIGURAÇÕES ==========
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzk9p47SYi4t9HEotN6FmelyTwf3nuioTsDDbR2TdqvTX7NDldxmev7VxTgQpLS5A1E/exec';
+
+let pedidos = [];
+let intervalo = null;
+let contagemRegressiva = 30;
+let sessionToken = null;
+
+// ========== LOGIN (validado no servidor via Apps Script) ==========
+async function fazerLogin() {
+  const usuario = document.getElementById('inputUsuario').value.trim().toLowerCase();
+  const senha   = document.getElementById('inputSenha').value.trim();
+  const erroEl  = document.getElementById('loginErro');
+  const btn     = document.querySelector('.login-btn');
+
+  if (!usuario || !senha) {
+    erroEl.textContent = 'Preencha usuário e senha.';
+    return;
+  }
+
+  erroEl.textContent = '';
+  btn.disabled = true;
+  btn.textContent = 'Entrando...';
+
+  try {
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' }, // evita preflight CORS no Apps Script
+      body: JSON.stringify({ action: 'login', usuario, senha })
+    });
+    const data = await res.json();
+
+    if (data.status === 'ok' && data.token) {
+      sessionToken = data.token;
+      sessionStorage.setItem('rdm_admin_token', sessionToken);
+      document.getElementById('telaLogin').style.display = 'none';
+      document.getElementById('telaAdmin').style.display = 'block';
+      iniciarAdmin();
+    } else {
+      erroEl.textContent = data.mensagem || 'Usuário ou senha incorretos.';
+      document.getElementById('inputSenha').value = '';
+      document.getElementById('inputSenha').focus();
+    }
+  } catch (e) {
+    erroEl.textContent = 'Erro ao conectar. Tente novamente.';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Entrar';
+  }
+}
+
+function sair() {
+  clearInterval(intervalo);
+  sessionToken = null;
+  sessionStorage.removeItem('rdm_admin_token');
+  document.getElementById('telaAdmin').style.display = 'none';
+  document.getElementById('telaLogin').style.display = 'flex';
+  document.getElementById('inputUsuario').value = '';
+  document.getElementById('inputSenha').value = '';
+  pedidos = [];
+}
+
+// Retoma sessão se já havia um token válido nesta aba
+window.addEventListener('DOMContentLoaded', () => {
+  const tokenSalvo = sessionStorage.getItem('rdm_admin_token');
+  if (tokenSalvo) {
+    sessionToken = tokenSalvo;
+    document.getElementById('telaLogin').style.display = 'none';
+    document.getElementById('telaAdmin').style.display = 'block';
+    iniciarAdmin();
+  }
+});
+
+// ========== BUSCAR PEDIDOS DO GOOGLE SHEETS ==========
+async function buscarPedidos() {
+  try {
+    const res = await fetch(APPS_SCRIPT_URL + '?action=listar&token=' + encodeURIComponent(sessionToken), {
+      method: 'GET',
+      redirect: 'follow'
+    });
+    const data = await res.json();
+
+    if (data && data.error === 'unauthorized') {
+      // Token expirado ou inválido — volta para a tela de login
+      sair();
+      document.getElementById('loginErro').textContent = 'Sessão expirada. Entre novamente.';
+      return;
+    }
+
+    if (data && Array.isArray(data.pedidos)) {
+      pedidos = data.pedidos;
+      renderizarPedidos();
+    }
+  } catch (e) {
+    console.warn('Erro ao buscar pedidos:', e);
+    document.getElementById('listaPedidos').innerHTML =
+      `<div class="pedido-vazio">Erro ao conectar. Verifique a URL do Apps Script.</div>`;
+  }
+}
+
+// ========== INICIAR ADMIN ==========
+function iniciarAdmin() {
+  buscarPedidos();
+  contagemRegressiva = 30;
+  intervalo = setInterval(() => {
+    contagemRegressiva--;
+    document.getElementById('statusAtualizacao').textContent =
+      `Atualizando em ${contagemRegressiva}s...`;
+    if (contagemRegressiva <= 0) {
+      contagemRegressiva = 30;
+      buscarPedidos();
+    }
+  }, 1000);
+}
+
+// ========== RENDERIZAR PEDIDOS ==========
+function renderizarPedidos() {
+  const container = document.getElementById('listaPedidos');
+  const badge = document.getElementById('badgeTotal');
+
+  if (!pedidos || pedidos.length === 0) {
+    badge.textContent = '0 pedidos';
+    container.innerHTML = `<div class="pedido-vazio">Nenhum pedido recebido ainda hoje.</div>`;
+    return;
+  }
+
+  badge.textContent = `${pedidos.length} pedido${pedidos.length !== 1 ? 's' : ''}`;
+  container.innerHTML = '';
+
+  pedidos.forEach(pedido => {
+    const card = document.createElement('div');
+    card.className = 'pedido-card';
+
+    // Agrupar marmitas iguais
+    const marmitasAgrupadas = agruparMarmitas(pedido.marmitas);
+    const totalMarmitas = pedido.marmitas.reduce((s, m) => s + (m.qty || 1), 0);
+
+    let marmitasHTML = marmitasAgrupadas.map(m => `
+      <div class="marmita-linha">
+        <div class="marmita-badge">${m.qty > 1 ? m.qty + 'x ' : ''}${m.tipo}</div>
+        <div class="marmita-itens">${String(m.itens).replace('⚠️ Obs:', '<span class="obs-destaque">Obs:</span>')}</div>
+      </div>
+    `).join('');
+
+    card.innerHTML = `
+      <div class="pedido-header">
+        <div class="pedido-cliente">${pedido.nome}</div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <span class="pedido-hora">${pedido.hora || ''}</span>
+          <span class="pedido-total-tag">Total: ${totalMarmitas} marmita${totalMarmitas !== 1 ? 's' : ''}</span>
+        </div>
+      </div>
+      ${marmitasHTML}
+    `;
+    container.appendChild(card);
+  });
+}
+
+// ========== AGRUPAR MARMITAS IGUAIS ==========
+function agruparMarmitas(marmitas) {
+  const grupos = [];
+  marmitas.forEach(m => {
+    const chave = `${m.tipo}||${m.itens}||${m.tipoPedido}`;
+    const existente = grupos.find(g => `${g.tipo}||${g.itens}||${g.tipoPedido}` === chave);
+    if (existente) {
+      existente.qty += (m.qty || 1);
+    } else {
+      grupos.push({ tipo: m.tipo, itens: m.itens, qty: m.qty || 1, tipoPedido: m.tipoPedido });
+    }
+  });
+  return grupos;
+}
+
+// ========== FORMATAÇÃO DOS ITENS PARA O WORD ==========
+function juntarComTraco(str) {
+  return str.split(',').map(s => s.trim()).filter(Boolean).join(' - ');
+}
+
+function formatarItensPersonalizada(itensStr) {
+  let resto = itensStr;
+  let obs = '';
+
+  const idxObs = resto.indexOf('⚠️ Obs:');
+  if (idxObs !== -1) {
+    obs = resto.slice(idxObs + '⚠️ Obs:'.length).trim();
+    resto = resto.slice(0, idxObs).trim().replace(/\|\s*$/, '').trim();
+  }
+
+  let salada = '';
+  const idxSalada = resto.indexOf('Salada:');
+  if (idxSalada !== -1) {
+    salada = resto.slice(idxSalada + 'Salada:'.length).trim();
+    resto = resto.slice(0, idxSalada).trim().replace(/\|\s*$/, '').trim();
+  }
+
+  let carnes = '';
+  const idxCarnes = resto.indexOf('Carnes:');
+  if (idxCarnes !== -1) {
+    carnes = resto.slice(idxCarnes + 'Carnes:'.length).trim();
+    resto = resto.slice(0, idxCarnes).trim().replace(/\|\s*$/, '').trim();
+  }
+
+  const acomp = resto.trim();
+
+  const linhas = [];
+  if (salada) linhas.push(juntarComTraco(salada));
+  if (acomp) linhas.push(juntarComTraco(acomp));
+  if (carnes) {
+    carnes.split(',').map(c => c.trim()).filter(Boolean).forEach(c => linhas.push(c));
+  }
+  if (obs) linhas.push(`Obs: ${obs}`);
+
+  return linhas;
+}
+
+function formatarItensMarmita(m) {
+  if (m.tipoPedido === 'padrao') {
+    const linhas = ['Padrão'];
+    const idxObs = m.itens.indexOf('⚠️ Obs:');
+    if (idxObs !== -1) {
+      const obs = m.itens.slice(idxObs + '⚠️ Obs:'.length).trim();
+      if (obs) linhas.push(`Obs: ${obs}`);
+    }
+    return linhas;
+  }
+  return formatarItensPersonalizada(m.itens);
+}
+
+// ========== GERAR WORD ==========
+async function gerarWord() {
+  if (!pedidos || pedidos.length === 0) {
+    alert('Nenhum pedido para imprimir.');
+    return;
+  }
+
+  const { Document, Packer, Paragraph, TextRun } = window.docxLib;
+  if (!Document) { alert('Biblioteca ainda carregando, tente novamente em alguns segundos.'); return; }
+
+  const children = [];
+
+  pedidos.forEach((pedido, idx) => {
+    const totalMarmitas = pedido.marmitas.reduce((s, m) => s + (m.qty || 1), 0);
+    const marmitasAgrupadas = agruparMarmitas(pedido.marmitas);
+
+    // Nome do cliente
+    children.push(new Paragraph({
+      children: [new TextRun({ text: `Nome: ${pedido.nome}`, font: 'Arial', size: 24, bold: true })]
+    }));
+
+    // Total de marmitas
+    children.push(new Paragraph({
+      children: [new TextRun({ text: `Total de Marmitas: ${totalMarmitas}`, font: 'Arial', size: 24 })]
+    }));
+
+    // Linha em branco
+    children.push(new Paragraph({ children: [new TextRun({ text: '', font: 'Arial', size: 24 })] }));
+
+    // Cada marmita
+    marmitasAgrupadas.forEach(m => {
+      const tipoLabel = m.qty > 1 ? `${m.qty}x ${m.tipo}` : m.tipo;
+      children.push(new Paragraph({
+        children: [new TextRun({ text: tipoLabel, font: 'Arial', size: 24, bold: true })]
+      }));
+      formatarItensMarmita(m).forEach(linha => {
+        children.push(new Paragraph({
+          children: [new TextRun({ text: linha, font: 'Arial', size: 24 })]
+        }));
+      });
+      children.push(new Paragraph({ children: [new TextRun({ text: '', font: 'Arial', size: 24 })] }));
+    });
+
+    // Separador entre pedidos (exceto no último)
+    if (idx < pedidos.length - 1) {
+      children.push(new Paragraph({
+        children: [new TextRun({ text: '________________________________________________', font: 'Arial', size: 24 })]
+      }));
+      children.push(new Paragraph({ children: [new TextRun({ text: '', font: 'Arial', size: 24 })] }));
+    }
+  });
+
+  const doc = new Document({
+    sections: [{
+      properties: {
+        page: {
+          size: { width: 11906, height: 16838 },
+          // 0,5cm em cada margem (1cm ≈ 566.93 twips)
+          margin: { top: 283, right: 283, bottom: 283, left: 283 }
+        }
+      },
+      children
+    }]
+  });
+
+  const buffer = await Packer.toBlob(doc);
+  const url = URL.createObjectURL(buffer);
+  const a = document.createElement('a');
+  const hoje = new Date().toLocaleDateString('pt-BR').replace(/\//g, '-');
+  a.href = url;
+  a.download = `pedidos-${hoje}.docx`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ============================================================
+// ABAS DE NAVEGAÇÃO
+// ============================================================
+let resumoJaCarregado = false;
+let fechadosJaCarregado = false;
+
+function trocarTab(tab) {
+  document.querySelectorAll('.admin-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === 'tab-' + tab));
+
+  if (tab === 'resumo' && !resumoJaCarregado) carregarResumo();
+  if (tab === 'fechados' && !fechadosJaCarregado) carregarFechados();
+}
+
+// ============================================================
+// RESUMO & HISTÓRICO
+// ============================================================
+function fmtR(v) { return 'R$ ' + (Number(v) || 0).toFixed(2).replace('.', ','); }
+function fmtDataBR(iso) { const [a, m, d] = iso.split('-'); return `${d}/${m}`; }
+
+async function carregarResumo() {
+  const cont = document.getElementById('resumoConteudo');
+  cont.innerHTML = '<div class="carregando-box"><div class="spinner"></div>Carregando resumo…</div>';
+  try {
+    const url = APPS_SCRIPT_URL + '?action=resumo&token=' + encodeURIComponent(sessionToken);
+    const res = await fetch(url, { method: 'GET', redirect: 'follow' });
+    const d = await res.json();
+    if (d && d.error === 'unauthorized') { sair(); return; }
+
+    resumoJaCarregado = true;
+    const h = d.hoje;
+    const totMarm = h.total || 0;
+    const pctM = totMarm > 0 ? Math.round(h.media / totMarm * 100) : 0;
+    const pctG = 100 - pctM;
+    const pesarTxt = (h.pesar || 0) > 0 ? ` · ${h.pesar} a pesar` : '';
+
+    const p = d.previsao;
+    let prevHtml = `<div class="prev-card">
+      <div class="prev-eyebrow">Previsão · próximo dia</div>
+      <div class="prev-dia">${p.diaSemana}, ${fmtDataBR(p.data)}</div>`;
+    if (p.baseAmostras === 0) {
+      prevHtml += `<div style="font-size:0.9rem;opacity:0.9;">Ainda sem dados suficientes de ${p.diaSemana.toLowerCase()}s anteriores para prever.</div>`;
+    } else {
+      prevHtml += `<div class="prev-nums">
+          <div class="prev-n"><b>${p.totalPrevisto}</b><span>marmitas previstas</span></div>
+          <div class="prev-n"><b>${p.mediaPrevista}</b><span>médias</span></div>
+          <div class="prev-n"><b>${p.grandePrevista}</b><span>grandes</span></div>
+          <div class="prev-n"><b>${fmtR(p.valorPrevisto).replace('R$ ','R$')}</b><span>estimado</span></div>
+        </div>
+        <div class="prev-conf">Baseado em ${p.baseAmostras} ${p.diaSemana.toLowerCase()}${p.baseAmostras>1?'s':''} anterior${p.baseAmostras>1?'es':''} · confiança ${p.confianca}</div>`;
+    }
+    prevHtml += `</div>`;
+
+    const ant = (d.anteriores || []).slice().reverse();
+    let tabela;
+    if (ant.length === 0) {
+      tabela = '<div class="pedido-vazio">Nenhum dia anterior registrado ainda.</div>';
+    } else {
+      tabela = `<table class="hist"><thead><tr>
+        <th style="text-align:left;">Dia</th><th>Média</th><th>Grande</th><th>Total</th><th>Valor</th>
+      </tr></thead><tbody>` +
+      ant.map(x => `<tr>
+        <td class="dia">${x.diaSemana.slice(0,3)} ${fmtDataBR(x.data)}</td>
+        <td>${x.media}</td><td>${x.grande}</td><td><b>${x.total}</b></td><td>${fmtR(x.valor).replace('R$ ','R$')}</td>
+      </tr>`).join('') + `</tbody></table>`;
+    }
+
+    cont.innerHTML = `
+      <div class="stat-card wide">
+        <div class="stat-label">Hoje — ${h.diaSemana}, ${fmtDataBR(h.data)} · balcão + site</div>
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:6px;">
+          <div><div class="stat-num verde">${totMarm}</div><div class="stat-sub">marmitas no total${pesarTxt}</div></div>
+          <div style="text-align:right;"><div class="stat-valor">${fmtR(h.valor)}</div><div class="stat-sub">em marmitas com preço fixo</div></div>
+        </div>
+        <div class="barra-prop"><i class="fm" style="width:${pctM}%"></i><i class="fg" style="width:${pctG}%"></i></div>
+        <div class="legenda">
+          <span><i style="background:var(--verde-claro)"></i>Média: <b>&nbsp;${h.media}</b></span>
+          <span><i style="background:#8B0000"></i>Grande: <b>&nbsp;${h.grande}</b></span>
+        </div>
+      </div>
+      <div class="resumo-grid">
+        <div class="stat-card"><div class="stat-label">Marmitas Média</div><div class="stat-num media">${h.media}</div></div>
+        <div class="stat-card"><div class="stat-label">Marmitas Grande</div><div class="stat-num grande">${h.grande}</div></div>
+      </div>
+      <div style="margin-top:18px;">${prevHtml}</div>
+      <div class="admin-info-bar" style="margin:4px 0 12px;"><h2 style="font-size:1.1rem;">Dias anteriores</h2></div>
+      ${tabela}
+      <div style="text-align:center;color:var(--cinza);font-size:0.76rem;margin-top:14px;">Conta pedidos do balcão e do site · atualizado ${d.geradoEm}</div>
+    `;
+  } catch (e) {
+    cont.innerHTML = '<div class="pedido-vazio">Não foi possível carregar o resumo. Verifique se as funções foram adicionadas ao Apps Script.</div>';
+  }
+}
+
+// ============================================================
+// DIAS FECHADOS — CALENDÁRIO
+// ============================================================
+let diasFechados = [];
+let calMesAtual = null;
+
+function hojeSP() {
+  const p = new Intl.DateTimeFormat('en-CA', { timeZone:'America/Sao_Paulo', year:'numeric', month:'2-digit', day:'2-digit' }).formatToParts(new Date());
+  const g = t => p.find(x => x.type===t)?.value ?? '';
+  return `${g('year')}-${g('month')}-${g('day')}`;
+}
+
+async function carregarFechados() {
+  const cont = document.getElementById('fechadosConteudo');
+  cont.innerHTML = '<div class="carregando-box"><div class="spinner"></div>Carregando calendário…</div>';
+  try {
+    const url = APPS_SCRIPT_URL + '?action=diasFechados&token=' + encodeURIComponent(sessionToken);
+    const res = await fetch(url, { method:'GET', redirect:'follow' });
+    const d = await res.json();
+    if (d && d.error === 'unauthorized') { sair(); return; }
+    diasFechados = Array.isArray(d.dias) ? d.dias : [];
+    fechadosJaCarregado = true;
+
+    if (!calMesAtual) {
+      const [a, m] = hojeSP().split('-');
+      calMesAtual = new Date(parseInt(a), parseInt(m) - 1, 1);
+    }
+    renderCalendario();
+  } catch (e) {
+    cont.innerHTML = '<div class="pedido-vazio">Não foi possível carregar os dias fechados.</div>';
+  }
+}
+
+function mudarMes(delta) {
+  calMesAtual = new Date(calMesAtual.getFullYear(), calMesAtual.getMonth() + delta, 1);
+  renderCalendario();
+}
+
+function renderCalendario() {
+  const cont = document.getElementById('fechadosConteudo');
+  const ano = calMesAtual.getFullYear();
+  const mes = calMesAtual.getMonth();
+  const nomesMes = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const dow = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+  const hoje = hojeSP();
+
+  const primeiroDiaSemana = new Date(ano, mes, 1).getDay();
+  const diasNoMes = new Date(ano, mes + 1, 0).getDate();
+
+  let celulas = '';
+  dow.forEach(d => { celulas += `<div class="cal-dow">${d}</div>`; });
+  for (let i = 0; i < primeiroDiaSemana; i++) celulas += `<div class="cal-dia vazio"></div>`;
+
+  for (let dia = 1; dia <= diasNoMes; dia++) {
+    const iso = `${ano}-${String(mes+1).padStart(2,'0')}-${String(dia).padStart(2,'0')}`;
+    const dataObj = new Date(ano, mes, dia);
+    const ehDomingo = dataObj.getDay() === 0;
+    const ehFechado = diasFechados.includes(iso);
+    const ehHoje = iso === hoje;
+    const ehPassado = iso < hoje;
+
+    let cls = 'cal-dia';
+    if (ehDomingo) cls += ' domingo';
+    if (ehFechado) cls += ' fechado';
+    if (ehHoje) cls += ' hoje';
+    if (ehPassado && !ehFechado) cls += ' passado';
+
+    const onclick = ehDomingo ? '' : ` onclick="toggleDia('${iso}')"`;
+    const titulo = ehDomingo ? 'title="Domingo já é fechado"' : '';
+    celulas += `<div class="${cls}" ${titulo}${onclick}>${dia}</div>`;
+  }
+
+  const futuras = diasFechados.filter(x => x >= hoje).sort();
+  let chips = '';
+  if (futuras.length > 0) {
+    chips = futuras.map(iso => {
+      const [a,m,dd] = iso.split('-');
+      return `<span class="chip-data">${dd}/${m}/${a}<button onclick="toggleDia('${iso}')" title="Reabrir">✕</button></span>`;
+    }).join('');
+  } else {
+    chips = '<div style="color:var(--cinza);font-size:0.88rem;">Nenhum dia fechado à frente.</div>';
+  }
+
+  cont.innerHTML = `
+    <div class="cal-wrap">
+      <div class="cal-head">
+        <button class="cal-nav" onclick="mudarMes(-1)">‹</button>
+        <div class="cal-mes">${nomesMes[mes]} ${ano}</div>
+        <button class="cal-nav" onclick="mudarMes(1)">›</button>
+      </div>
+      <div class="cal-grid">${celulas}</div>
+      <div class="cal-legenda">
+        <span><i style="background:#c0392b"></i>Fechado</span>
+        <span><i style="background:#f0e6e6"></i>Domingo</span>
+        <span><i style="background:#fff;border:1px solid var(--borda)"></i>Aberto</span>
+      </div>
+      <div class="cal-hint">Toque num dia para fechar ou reabrir.</div>
+    </div>
+    <div class="lista-fechados">
+      <h3>Próximos dias fechados</h3>
+      ${chips}
+    </div>
+  `;
+}
+
+async function toggleDia(iso) {
+  const estaFechado = diasFechados.includes(iso);
+  const acao = estaFechado ? 'abrirDia' : 'fecharDia';
+
+  if (estaFechado) diasFechados = diasFechados.filter(x => x !== iso);
+  else diasFechados = [...diasFechados, iso].sort();
+  renderCalendario();
+
+  try {
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ action: acao, token: sessionToken, data: iso })
+    });
+    const d = await res.json();
+    if (d && d.error === 'unauthorized') { sair(); return; }
+    if (d && Array.isArray(d.dias)) {
+      // Só aceita a lista do servidor se ela refletir a ação que acabamos
+      // de fazer; senão mantém o estado local (evita a data "sumir").
+      const refletiu = estaFechado ? !d.dias.includes(iso) : d.dias.includes(iso);
+      if (refletiu) { diasFechados = d.dias; renderCalendario(); }
+    }
+  } catch (e) {
+    if (estaFechado) diasFechados = [...diasFechados, iso].sort();
+    else diasFechados = diasFechados.filter(x => x !== iso);
+    renderCalendario();
+    alert('Não foi possível salvar. Verifique a conexão e tente de novo.');
+  }
+}
+</script>
+</body>
+</html>

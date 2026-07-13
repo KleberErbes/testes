@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Restaurante do Mário — comida caseira, buffet livre e marmitas para retirar no balcão. BR-280, Km 82, anexo ao Posto Ipiranga.">
+  <meta name="theme-color" content="#14350f">
+  <title>Restaurante do Mário — Comida Caseira e Marmitas</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,600&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <a class="skip-link" href="#pedidos">Ir direto para pedir marmitas</a>
+
+  <header>
+    <div class="header-top">
+      <div class="logo">
+        <div class="logo-icon">
+          <img src="logo.jpeg" alt="Logotipo do Restaurante do Mário">
+        </div>
+        <div>
+          <h1>Restaurante do Mário</h1>
+          <span class="logo-sub">Tradição &amp; Sabor desde 1997</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="header-info">
+        </div>
+        <div class="cart-section">
+          <span id="badgeHorario" class="badge-horario" role="status">Verificando...</span>
+          <button class="cart-btn" onclick="toggleCart()" aria-label="Abrir carrinho de pedidos">
+            Carrinho
+            <span class="cart-count" id="cartCount" aria-live="polite">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAV: botões de rolagem automática para cada seção -->
+    <nav aria-label="Seções do site">
+      <button onclick="scrollToSection('inicio')">Início</button>
+      <button onclick="scrollToSection('cardapio-dia-sec')">Cardápio</button>
+      <button onclick="scrollToSection('pedidos')">Marmitas</button>
+      <button onclick="scrollToSection('localizacao')">Localização</button>
+    </nav>
+  </header>
+
+  <!-- ===================== HERO / INÍCIO ===================== -->
+  <section id="inicio">
+    <span class="scroll-anchor" id="anchor-inicio"></span>
+    <div class="hero">
+      <div>
+        <div class="hero-badge">Comida caseira de verdade</div>
+        <h2>Bem-vindo ao<span class="nome">Restaurante do Mário</span></h2>
+        <p>Sabores autênticos, ingredientes frescos e o carinho de quem faz com amor.<br>Nossa nova forma de atender
+          você!</p>
+        <div class="hero-btns">
+          <button class="hero-btn-primary" onclick="scrollToSection('pedidos')">Pedir marmita</button>
+          <button class="hero-btn-secondary" onclick="scrollToSection('cardapio-dia-sec')">Ver cardápio</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUFFET LIVRE abaixo do hero -->
+    <div class="buffet-home">
+      <div class="buffet-home-inner">
+
+        <div class="horario-card">
+          <div class="horario-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <circle cx="12" cy="12" r="9"></circle>
+              <path d="M12 7v5l3 2"></path>
+            </svg>
+          </div>
+          <div>
+            <h3>Horário de funcionamento</h3>
+            <p>10h30 às 14h00</p>
+            <small>Segunda a Sábado</small>
+          </div>
+        </div>
+
+        <div class="aviso-horario">
+          <span class="aviso-icone" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <circle cx="12" cy="12" r="9"></circle>
+              <path d="M12 8v4"></path>
+              <path d="M12 16h.01"></path>
+            </svg>
+          </span>
+          <p>Os pedidos de marmitas estão restritos aos seguintes horários:<br>
+            <strong>8h até as 14h</strong>
+          </p>
+        </div>
+
+        <h2 class="buffet-home-title">Buffet Livre</h2>
+        <p class="buffet-home-sub">Venha nos visitar e saboreie o melhor da culinária caseira!</p>
+
+        <div class="buffet-grid">
+          <div class="buffet-card">
+            <h3>Segunda a Sexta</h3>
+            <div class="buffet-price"><span>R$</span> 39,00</div>
+            <p>Comida feita com capricho, cardápio variado todo dia!</p>
+          </div>
+          <div class="buffet-card">
+            <h3>Sábado</h3>
+            <div class="buffet-price"><span>R$</span> 42,00</div>
+            <p>Especial de sábado com ainda mais opções no balcão!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CARDÁPIO DO DIA ===================== -->
+  <section id="cardapio-dia-sec">
+    <span class="scroll-anchor" id="anchor-cardapio"></span>
+    <h2>Cardápio do Dia</h2>
+    <div class="cardapio-galeria">
+
+    </div>
+    <span class="cardapio-atualizado" id="cardapioAtualizado" hidden></span>
+    <p class="subtitle">Tudo o que preparamos hoje com carinho!</p>
+
+    <div class="cardapio-grid">
+      <div class="cardapio-col">
+        <div class="cardapio-box box-acomp">
+          <div class="cardapio-box-banner">
+            <img src="IMG_4031.png" alt="Acompanhamentos do buffet servidos no balcão" class="cardapio-box-img" loading="lazy">
+            <div class="cardapio-box-title">Acompanhamentos</div>
+          </div>
+          <div class="cardapio-box-list" id="listaAcomp"></div>
+        </div>
+      </div>
+      <div class="cardapio-col">
+        <div class="cardapio-box box-carne">
+          <div class="cardapio-box-banner">
+            <img src="Carnes.png" alt="Carnes do dia preparadas na casa" class="cardapio-box-img" loading="lazy">
+            <div class="cardapio-box-title">Carnes</div>
+          </div>
+          <div class="cardapio-box-list" id="listaCarne"></div>
+        </div>
+      </div>
+      <div class="cardapio-col">
+        <div class="cardapio-box box-salada">
+          <div class="cardapio-box-banner">
+            <img src="IMG_4022.png" alt="Saladas frescas do buffet" class="cardapio-box-img" loading="lazy">
+            <div class="cardapio-box-title">Saladas</div>
+          </div>
+          <div class="cardapio-box-list" id="listaSalada"></div>
+        </div>
+      </div>
+      <div class="cardapio-col">
+        <div class="cardapio-box box-sobremesa">
+          <div class="cardapio-box-banner">
+            <img src="IMG_4021.png" alt="Sobremesas caseiras do dia" class="cardapio-box-img" loading="lazy">
+            <div class="cardapio-box-title">Sobremesas</div>
+          </div>
+          <div class="cardapio-box-list" id="listaSobremesa"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PEDIDOS ===================== -->
+  <section id="pedidos">
+    <span class="scroll-anchor" id="anchor-pedidos"></span>
+    <h2>Pedir Marmitas</h2>
+    <p class="subtitle">Escolha a opção ideal para você!</p>
+
+    <div class="kilo-banner">
+      <h3>Também temos Marmita a Quilo!</h3>
+      <div class="kilo-options">
+        <div class="kilo-tag">Acompanhamento + Carne + Salada <span>R$ 62,90/kg</span></div>
+        <div class="kilo-tag">Somente Carne <span>R$ 79,90/kg</span></div>
+        <div class="kilo-tag">Somente Salada <span>R$ 44,90/kg</span></div>
+      </div>
+    </div>
+
+    <!-- Cardápio do Dia -->
+    <div class="cardapio-pedidos-box">
+      <div class="cardapio-pedidos-title">Cardápio das Marmitas</div>
+      <div class="cardapio-pedidos-grid">
+        <div class="cpg-col">
+          <div class="cpg-label cpg-acomp">Acompanhamentos</div>
+          <div class="cpg-list" id="cpgAcomp"></div>
+        </div>
+        <div class="cpg-col">
+          <div class="cpg-label cpg-carne">Carnes</div>
+          <div class="cpg-list" id="cpgCarne"></div>
+        </div>
+        <div class="cpg-col">
+          <div class="cpg-label cpg-salada">Saladas</div>
+          <div class="cpg-list" id="cpgSalada"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Marmitas Padrão -->
+    <div class="marmita-cards">
+      <div class="marmita-card">
+        <h3>Marmita Média</h3>
+        <div class="gramagem">Aprox. 750g</div>
+        <div class="price-tag">R$ 26,00</div>
+        <ul>
+          <li>Arroz branco</li>
+          <li>Feijão</li>
+          <li>Macarrão</li>
+          <li>Aipim com bacon</li>
+          <li>3 pedaços — Carne do dia</li>
+        </ul>
+        <textarea class="obs-input" id="obsMedia" placeholder="Observações (opcional)..."
+          maxlength="200" aria-label="Observações para a marmita média"></textarea>
+        <div class="qty-selector">
+          <button class="qty-btn" onclick="changeQty('media', -1)" aria-label="Diminuir quantidade da marmita média">−</button>
+          <span class="qty-value" id="qtyMedia" aria-live="polite">1</span>
+          <button class="qty-btn" onclick="changeQty('media', 1)" aria-label="Aumentar quantidade da marmita média">+</button>
+        </div>
+        <button class="btn-add" onclick="addPadrao('media')">+ Adicionar ao carrinho</button>
+      </div>
+      <div class="marmita-card">
+        <h3>Marmita Grande</h3>
+        <div class="gramagem">Aprox. 900g</div>
+        <div class="price-tag">R$ 28,00</div>
+        <ul>
+          <li>Arroz branco</li>
+          <li>Feijão</li>
+          <li>Macarrão</li>
+          <li>Aipim com bacon</li>
+          <li>3 pedaços — Carne do dia</li>
+        </ul>
+        <textarea class="obs-input" id="obsGrande" placeholder="Observações (opcional)..."
+          maxlength="200" aria-label="Observações para a marmita grande"></textarea>
+        <div class="qty-selector">
+          <button class="qty-btn" onclick="changeQty('grande', -1)" aria-label="Diminuir quantidade da marmita grande">−</button>
+          <span class="qty-value" id="qtyGrande" aria-live="polite">1</span>
+          <button class="qty-btn" onclick="changeQty('grande', 1)" aria-label="Aumentar quantidade da marmita grande">+</button>
+        </div>
+        <button class="btn-add" onclick="addPadrao('grande')">+ Adicionar ao carrinho</button>
+      </div>
+    </div>
+
+    <!-- Marmita Personalizada -->
+    <div class="personalizada-box">
+      <h3>Monte Sua Marmita</h3>
+      <p class="subtitle" style="margin-bottom:0;">Escolha o tamanho, acompanhamentos, carnes e saladas.</p>
+
+      <div class="section-label">Tamanho</div>
+      <div class="size-selector">
+        <button class="size-btn selected" id="sizeMedia" onclick="selectSize('media')">
+          Média<small>R$ 26,00</small>
+        </button>
+        <button class="size-btn" id="sizeGrande" onclick="selectSize('grande')">
+          Grande<small>R$ 28,00</small>
+        </button>
+      </div>
+      <div class="section-label">Quantidade</div>
+      <div class="qty-selector">
+        <button class="qty-btn" onclick="changeQtyPersonalizada(-1)" aria-label="Diminuir quantidade da marmita personalizada">−</button>
+        <span class="qty-value" id="qtyPersonalizada" aria-live="polite">1</span>
+        <button class="qty-btn" onclick="changeQtyPersonalizada(1)" aria-label="Aumentar quantidade da marmita personalizada">+</button>
+      </div>
+
+      <div class="section-label">Acompanhamentos <span>(máx. 5 — acima disso +R$4,00 cada)</span></div>
+      <div class="counter-info" id="acompCounter">Selecionados: 0 / 5</div>
+      <div class="itens-grid" id="acompGrid"></div>
+
+      <div class="section-label">Carnes <span>(máx. 3 pedaços — acima disso +R$4,00 cada pedaço extra)</span></div>
+      <div class="counter-info" id="carneCounter">Selecionados: 0 pedaços</div>
+      <div class="itens-grid" id="carneGrid"></div>
+
+      <div class="section-label">Salada <span>(máx. 3 — +R$2,00 cada)</span></div>
+      <div class="counter-info" id="saladaCounter">Selecionadas: 0 / 3</div>
+      <div class="itens-grid" id="saladaGrid"></div>
+
+      <div class="preco-personalizada">
+        <span>Total estimado:</span>
+        <span id="precoPersonalizada">R$ 26,00</span>
+      </div>
+      <div id="infoPesar" class="info-pesar" style="display:none;">
+        O preço será definido na balança — confira o valor do quilo na seção Pedir Marmitas.
+      </div>
+
+      <textarea class="obs-input" id="obsPersonalizada" placeholder="Observações (opcional)..."
+        maxlength="200" aria-label="Observações para a marmita personalizada"></textarea>
+
+      <button class="btn-add" onclick="addPersonalizada()">+ Adicionar Marmita Personalizada ao carrinho</button>
+    </div>
+  </section>
+
+  <!-- ===================== LOCALIZAÇÃO ===================== -->
+  <section id="localizacao">
+    <span class="scroll-anchor" id="anchor-localizacao"></span>
+    <div style="max-width:600px;margin:0 auto;">
+
+      <div class="loc-eyebrow-wrap">
+        <span class="loc-eyebrow-line"></span>
+        <span class="loc-eyebrow">Como chegar</span>
+        <span class="loc-eyebrow-line"></span>
+      </div>
+      <h2 class="loc-title">Nossa <em>Localização</em></h2>
+      <p class="loc-sub">Estamos prontos para te receber!</p>
+
+      <div>
+        <div class="loc-info-row">
+          <div>
+            <div class="loc-label">Endereço</div>
+            <div class="loc-value">BR-280, Km 82, Nº 515<br>Anexo ao Posto Ipiranga</div>
+          </div>
+        </div>
+
+        <div class="loc-info-row">
+          <div>
+            <div class="loc-label">Horário</div>
+            <div class="loc-value">Segunda a Sábado · 10h30 às 14h00</div>
+          </div>
+        </div>
+
+        <div class="loc-info-row">
+          <div>
+            <div class="loc-label">Telefone</div>
+            <div class="loc-value"><a href="tel:+554733752227" style="color:inherit;text-decoration:none;">(47) 3375-2227</a></div>
+          </div>
+        </div>
+
+        <div class="loc-info-row" style="border-bottom:none;">
+          <div>
+            <div class="loc-label">Formas de pagamento</div>
+            <div class="loc-value">Pix · Cartão · ÚtilCard · VRCard · Sodexo</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="loc-mapa">
+        <div class="loc-mapa-foto">
+          <img src="posto.png" alt="Fachada do Restaurante do Mário, anexo ao Posto Ipiranga na BR-280" loading="lazy">
+        </div>
+        <div class="loc-mapa-body">
+          <div class="loc-mapa-nome">Restaurante do Mário</div>
+          <div class="loc-mapa-end">BR-280, Km 82 — Posto Ipiranga</div>
+          <a class="loc-mapa-btn" href="https://maps.app.goo.gl/yGuFPHiz4SvZrHfB9" target="_blank" rel="noopener">
+            Abrir no Google Maps
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== RODAPÉ ===================== -->
+  <footer>
+    <div class="footer-logo">Restaurante do <em>Mário</em></div>
+    <div class="footer-copy">© 2026 · Tradição &amp; Sabor desde 1997</div>
+  </footer>
+
+  <!-- ===================== CART ===================== -->
+  <div class="overlay" id="overlay" onclick="toggleCart()"></div>
+  <div class="cart-panel" id="cartPanel" role="dialog" aria-label="Carrinho de pedidos">
+    <div class="cart-header">
+      <h2>Meu Carrinho</h2>
+      <button class="close-cart" onclick="toggleCart()" aria-label="Fechar carrinho">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <p class="cart-empty">Seu carrinho está vazio.</p>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total:</span>
+        <span id="cartTotal">R$ 0,00</span>
+      </div>
+      <div class="pagamentos">
+        <strong>Formas de pagamento</strong>
+        Pix · Cartão · ÚtilCard · VRCard · Sodexo
+      </div>
+      <button class="whatsapp-btn" onclick="abrirModalNome()">
+        Enviar pedido pelo WhatsApp
+      </button>
+    </div>
+  </div>
+
+  <!-- ===================== MODAL NOME DO CLIENTE ===================== -->
+  <div class="modal-overlay" id="modalOverlay" onclick="fecharModalNome()"></div>
+  <div class="modal-nome" id="modalNome" role="dialog" aria-label="Informe seu nome">
+    <h3>Qual é o seu nome?</h3>
+    <p>Para identificarmos seu pedido.</p>
+    <input type="text" id="inputNomeCliente" placeholder="Digite seu nome..." maxlength="60"
+      aria-label="Seu nome" onkeydown="if(event.key==='Enter') confirmarPedido()" />
+    <div class="modal-btns">
+      <button class="modal-btn-cancelar" onclick="fecharModalNome()">Cancelar</button>
+      <button class="modal-btn-confirmar" onclick="confirmarPedido()">Confirmar e enviar</button>
+    </div>
+  </div>
+
+  <!-- ===================== MODAL CONFIRMAÇÃO ===================== -->
+  <div class="modal-overlay" id="modalConfirmOverlay" onclick="fecharModalConfirm()"></div>
+  <div class="modal-nome" id="modalConfirm" role="dialog" aria-label="Confirmação">
+    <h3 class="modal-confirm-title">Confirmar</h3>
+    <p class="modal-confirm-msg"></p>
+    <div class="modal-btns">
+      <button class="modal-btn-cancelar" onclick="fecharModalConfirm()">Cancelar</button>
+      <button class="modal-btn-confirmar modal-confirm-ok">Confirmar</button>
+    </div>
+  </div>
+
+  <!-- ===================== AVISO BALCÃO (fixo global) ===================== -->
+  <div class="aviso-balcao" id="avisoBalcao" role="status">
+    <strong>Não entregamos marmitas.</strong> Retire no balcão.
+  </div>
+
+</body>
+</html>
